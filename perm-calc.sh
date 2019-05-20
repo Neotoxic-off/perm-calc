@@ -7,6 +7,7 @@ banner(){
     printf " |  __/  __/ |  | | | | | |_____| (_| (_| | | (__ \n"
     printf " |_|   \___|_|  |_| |_| |_|      \___\__,_|_|\___|\n\n"
 }
+
 table(){
     clear
 
@@ -50,7 +51,6 @@ main(){
                 printf "\n[+] You already added this right\n"
                 sleep 3s
             else
-                echo $perms >> .check
                 perm="$(cat src/$perms)";
                 result="$(echo $(($result+$perm)))";
                 echo $perms >> .check
@@ -58,16 +58,15 @@ main(){
         else
             if [[ $perms == 'done' ]]; then
                 clear
-                printf "[+] Invite link :\n\n"
-                printf "\e[31mhttps://discordapp.com/oauth2/authorize?client_id=$ID&scope=bot&permissions=$result\e[97m\n"
-                printf "\n[+] Cleanning \n\n"
+                printf "\n[+] Invite link :"
+                printf "\e[31mhttps://discordapp.com/oauth2/authorize?client_id=$ID&scope=bot&permissions=$result\e[97m\n\n"
                 if [[ -f '.check' ]]; then
                     rm .check
                 fi
                 exit
             fi
             clear
-            printf "[+] ERROR << $perms >> doesn't exists\n\n"
+            printf "[+] ERROR <<$perms>> doesn't exists\n\n"
             sleep 3s
         fi
 
