@@ -44,8 +44,13 @@ table(){
     printf "       [\e[31mPS\e[97m]-Priority Speaker"
 }
 
+
 main(){
     result=0;
+
+    if [[ -f '.check' ]]; then
+        rm .check
+    fi
 
     printf "\n\n[+] ID : "
     read ID
@@ -57,13 +62,27 @@ main(){
         read perms
 
         if [[ -f src/$perms ]]; then
-            perm="$(cat src/$perms)"
-            result="$(echo $(($result+$perm)))"
+            check=$(grep -Fxq "$perms" .check; echo $?);
+
+            if [[ $check == *'0'* ]]; then
+                clear
+                printf "\n[+] You already added this right\n"
+                sleep 3s
+            else
+                echo $perms >> .check
+                perm="$(cat src/$perms)";
+                result="$(echo $(($result+$perm)))";
+                echo $perms >> .check
+            fi
         else
             if [[ $perms == 'done' ]]; then
                 clear
                 printf "[+] Invite link :\n\n"
                 printf "\e[31mhttps://discordapp.com/oauth2/authorize?client_id=$ID&scope=bot&permissions=$result\e[97m\n"
+                printf "\n[+] Cleanning \n\n"
+                if [[ -f '.check' ]]; then
+                    rm .check
+                fi
                 exit
             fi
             clear
