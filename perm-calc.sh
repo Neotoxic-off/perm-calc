@@ -23,24 +23,39 @@ table(){
     printf "\n[\e[31mEL\e[97m]-Enable Links             [\e[31mAF\e[97m]-Attach Files               [\e[31mMEV\e[97m]-Mention @everyone"
     printf "\n[\e[31mAR\e[97m]-Add Reactions"
     printf "\n\n[+] OTHER : \n"
-    printf "\n[\e[31mCN\e[97m]-Change Nickname           [\e[31mC\e[97m]-Connect                    [\e[31mS\e[97m]-Speak"
-    printf "\n[\e[31mDM\e[97m]-Deafen Members            [\e[31mUVA\e[97m]-Use Voice Activity       [\e[31mPS\e[97m]-Priority Speaker"
+    printf "\n[\e[31mCN\e[97m]-Change Nickname          [\e[31mC\e[97m]-Connect                     [\e[31mS\e[97m]-Speak"
+    printf "\n[\e[31mDM\e[97m]-Deafen Members           [\e[31mUVA\e[97m]-Use Voice Activity        [\e[31mPS\e[97m]-Priority Speaker"
+    printf "\n\n[+] TEMPLATES : \n"
+    printf "\n[\e[31mT1\e[97m]-All                      [\e[31mT2\e[97m]-All Without Admin"
+    printf "\n[\e[31mT3\e[97m]-Manager                  [\e[31mT4\e[97m]-Messager"
 }
 
-main(){
-    result=0;
-
+cleanner(){
     if [[ -f '.check' ]]; then
         rm .check
     fi
+}
 
+over(){
+    clear 
+    printf "\n[+] Invite link : "
+    printf "\e[31mhttps://discordapp.com/oauth2/authorize?client_id=$ID&scope=bot&permissions=$result\e[97m\n\n"
+    cleanner
+    exit
+}
+
+main(){
+
+    cleanner 
+
+    result=0;
     printf "\n\n[+] ID : "
     read ID
 
     while [[ $perms != 'done' ]]; do
         table
         printf "\n\n\n[+] Rights to add type \e[31mdone\e[97m when you have all rights : \n"
-        printf "=> "
+        printf " => "
         read perms
 
         if [[ -f src/$perms ]]; then
@@ -54,14 +69,24 @@ main(){
                 echo $perms >> .check
             fi
         else
+            if [[ $perms == 'T1' ]]; then
+                let "result=2146958847"
+                over
+            fi
+            if [[ $perms == 'T2' ]]; then
+                let "result=2146958839"
+                over
+            fi
+            if [[ $perms == 'T3' ]]; then
+                let "result=2035294398"
+                over
+            fi
+            if [[ $perms == 'T4' ]]; then
+                let "result=257088"
+                over
+            fi
             if [[ $perms == 'done' ]]; then
-                clear
-                printf "\n[+] Invite link : "
-                printf "\e[31mhttps://discordapp.com/oauth2/authorize?client_id=$ID&scope=bot&permissions=$result\e[97m\n\n"
-                if [[ -f '.check' ]]; then
-                    rm .check
-                fi
-                exit
+                over
             fi
             printf "[+] ERROR \e[31m$perms\e[97m doesn't exists\n\n"
         fi
