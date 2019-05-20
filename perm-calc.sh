@@ -47,9 +47,7 @@ main(){
             check=$(grep -Fxq "$perms" .check; echo $?);
 
             if [[ $check == *'0'* ]]; then
-                clear
                 printf "\n[+] You already added this right\n"
-                sleep 3s
             else
                 perm="$(cat src/$perms)";
                 result="$(echo $(($result+$perm)))";
@@ -65,9 +63,7 @@ main(){
                 fi
                 exit
             fi
-            clear
             printf "[+] ERROR <<$perms>> doesn't exists\n\n"
-            sleep 3s
         fi
 
     done
