@@ -56,14 +56,14 @@ main(){
         else
             if [[ $perms == 'done' ]]; then
                 clear
-                printf "\n[+] Invite link :"
+                printf "\n[+] Invite link : "
                 printf "\e[31mhttps://discordapp.com/oauth2/authorize?client_id=$ID&scope=bot&permissions=$result\e[97m\n\n"
                 if [[ -f '.check' ]]; then
                     rm .check
                 fi
                 exit
             fi
-            printf "[+] ERROR <<$perms>> doesn't exists\n\n"
+            printf "[+] ERROR \e[31m$perms\e[97m doesn't exists\n\n"
         fi
 
     done
