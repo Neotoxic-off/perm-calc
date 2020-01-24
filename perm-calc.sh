@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 banner(){
     printf "  ____                                     _      \n"
